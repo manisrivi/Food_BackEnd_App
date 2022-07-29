@@ -15,7 +15,7 @@ const service = {
       // generate Password
       user.password = await bcrypt.hash(user.password, await bcrypt.genSalt());
       // insert data
-      const { insertId } = await helper.createUser(user);
+      const { insertId } = await helper.createUser({ ...user, date: new Date() });
       res.send({ message: "user sign-up successfully", userId: insertId });
     } catch (error) {
       res.status(500).send({ error: error.message });

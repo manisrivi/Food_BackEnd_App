@@ -33,6 +33,9 @@ const helper = {
   findByEmailId(email) {
     return db.users.findOne({ email });
   },
+  findById(_id){
+    return db.users.findOne({ _id: ObjectId(_id) })
+  },
   createUser(user) {
     return db.users.insertOne(user);
   },

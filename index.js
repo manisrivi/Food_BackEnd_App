@@ -24,8 +24,11 @@ const app = express();
         // routes
         app.get('/', (req,res)=> res.send('hello world'));
         app.use('/auth', routes.authRoute);
+        app.use('/students', routes.studentsRoute);
+        app.use('/users', routes.userRoutes);
         app.use('/products', routes.productsRoute);
         app.use('/checkout', stripeRoute);
+        app.use('/orders', routes.ordersRoute);
         console.log('routes initillized successfully');
 
         // port
