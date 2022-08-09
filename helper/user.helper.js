@@ -1,10 +1,6 @@
-// import Joi
+// import files
 const joi = require("joi");
-
-// import mongodb driver
 const ObjectId = require("mongodb").ObjectId;
-
-// import db local folder
 const db = require("../shared/mongodb");
 
 // mongodb query
@@ -27,4 +23,5 @@ const helper = {
   },
 };
 
+// export
 module.exports = helper;

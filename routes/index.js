@@ -1,9 +1,11 @@
+// Common router
 const routes = {
-  studentsRoute: require("./students.route"),
+  adminauthRouter: require("./adminauth.route"),
   productsRoute: require("./products.route"),
   userRoutes: require("../routes/users.routes"),
   authRoute: require("./auth.route"),
-  ordersRoute: require('./orders.route'),
+  ordersRoute: require("./orders.route"),
 };
 
+// export
 module.exports = routes;

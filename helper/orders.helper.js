@@ -1,15 +1,18 @@
+// import files
 const db = require("../shared/mongodb");
 const ObjectId = require("mongodb").ObjectId;
 const joi = require("joi");
 
+// ordersSchema
 const ordersSchema = joi.object({
-  // userId: joi.string().required(),
+  userId: joi.string().required(),
   token: joi.object().required(),
   product: joi.array().required(),
   total: joi.number().required(),
-})
+  status: joi.string().required(),
+});
 
-
+// validateSchema & mongodb query
 const helper = {
   validate(post) {
     try {
@@ -21,9 +24,9 @@ const helper = {
   find() {
     return db.orders.find().toArray();
   },
-  findByUserId(userId){
+  findByUserId(userId) {
     console.log("userId:", userId);
-    return db.orders.find({userId: userId});
+    return db.orders.find({ userId: userId }).toArray();
   },
   findById(_id) {
     return db.orders.findOne({ _id: ObjectId(_id) });
@@ -43,4 +46,5 @@ const helper = {
   },
 };
 
+// export
 module.exports = helper;

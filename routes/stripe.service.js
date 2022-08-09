@@ -1,8 +1,10 @@
+// import files
 const router = require("express").Router();
 const KEY = process.env.STRIPE_KEY;
 const stripe = require("stripe")(KEY);
 const uuid = require("uuid").v4;
 
+// payment router
 router.post("/payment", async (req, res) => {
   console.log(req.body);
   let error;
@@ -18,7 +20,7 @@ router.post("/payment", async (req, res) => {
     const charge = await stripe.charges.create(
       {
         amount: product.price * 100,
-        currency: "usd",
+        currency: "INR",
         customer: customer.id,
         receipt_email: token.email,
         description: `Purchased the ${product.name}`,
@@ -46,6 +48,5 @@ router.post("/payment", async (req, res) => {
   res.json({ error, status });
 });
 
-
-
+// export
 module.exports = router;

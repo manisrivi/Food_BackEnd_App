@@ -1,7 +1,10 @@
+// import files
 const helper = require("../helper/user.helper");
 const authhelper = require("../helper/auth.helper");
 
+// user service
 const service = {
+  // All users
   async getAllUsers(req, res) {
     try {
       const data = await helper.find().toArray();
@@ -11,15 +14,19 @@ const service = {
       res.status(500).send({ error: "cannot fetch all data" });
     }
   },
+
+  // user by Id
   async getUsersById(req, res) {
     try {
-        const data = await helper.findById(req.params.id);
-        res.send(data);   
+      const data = await helper.findById(req.params.id);
+      res.send(data);
     } catch (error) {
-        console.log('error-', error.message);
-        res.status(500).send({error: `cannot fetch this id ${req.params.id}`})
+      console.log("error-", error.message);
+      res.status(500).send({ error: `cannot fetch this id ${req.params.id}` });
     }
   },
+
+  // udate user
   async updateUsers(req, res) {
     try {
       // data validation
@@ -35,6 +42,8 @@ const service = {
       res.status(500).send({ error: error.message });
     }
   },
+
+  // delete User ById
   async deleteUsersById(req, res) {
     try {
       // check productId
@@ -50,4 +59,5 @@ const service = {
   },
 };
 
+// export
 module.exports = service;

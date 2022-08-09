@@ -1,6 +1,9 @@
+// import files
 const helper = require("../helper/products.helper");
 
+// prodcut service
 const service = {
+  // All prodcuts
   async getAllProducts(req, res) {
     try {
       const data = await helper.find();
@@ -10,6 +13,8 @@ const service = {
       res.status(500).send({ error: "cannot fetch products" });
     }
   },
+
+  // product by Id
   async getProductsById(req, res) {
     try {
       const data = await helper.findById(req.params.id);
@@ -19,6 +24,8 @@ const service = {
       res.status(500).send({ error: `cannot fetch this id ${req.params.id}` });
     }
   },
+
+  // create product
   async createProducts(req, res) {
     try {
       // data validation
@@ -31,6 +38,8 @@ const service = {
       res.status(500).send({ error: "incorrect data try again" });
     }
   },
+
+  // update product
   async updateProducts(req, res) {
     try {
       // data validation
@@ -46,6 +55,8 @@ const service = {
       res.status(500).send({ error: error.message });
     }
   },
+
+  // delete product by Id
   async deleteProductsById(req, res) {
     try {
       // check productId
@@ -61,4 +72,5 @@ const service = {
   },
 };
 
+// export
 module.exports = service;

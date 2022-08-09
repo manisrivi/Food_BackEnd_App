@@ -1,7 +1,9 @@
+// import files
 const joi = require("joi");
 const db = require("../shared/mongodb");
 const ObjectId = require("mongodb").ObjectId;
 
+// productSchema
 const productSchema = joi.object({
   name: joi.string().required(),
   desc: joi.string().required(),
@@ -11,6 +13,7 @@ const productSchema = joi.object({
   offer: joi.number().required(),
 });
 
+// validationSchema & mongodb query
 const helper = {
   validate(post) {
     try {
@@ -41,4 +44,5 @@ const helper = {
   },
 };
 
+// export
 module.exports = helper;
