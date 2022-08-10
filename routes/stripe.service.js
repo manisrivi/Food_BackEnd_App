@@ -5,8 +5,7 @@ const stripe = require("stripe")(KEY);
 const uuid = require("uuid").v4;
 
 // payment router
-router.post("/payment", async (req, res) => {
-  console.log(req.body);
+router.post("/", async (req, res) => {
   let error;
   let status;
   try {
@@ -16,10 +15,10 @@ router.post("/payment", async (req, res) => {
       email: token.email,
       source: token.id,
     });
-    const key = uuid();
+    const idempontencyKey = uuid();
     const charge = await stripe.charges.create(
       {
-        amount: product.price * 100,
+        amount: product.price,
         currency: "INR",
         customer: customer.id,
         receipt_email: token.email,
@@ -36,7 +35,7 @@ router.post("/payment", async (req, res) => {
         },
       },
       {
-        key,
+        idempontencyKey,
       }
     );
     console.log("Charge:", { charge });
