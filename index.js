@@ -31,6 +31,7 @@ const app = express();
     app.use("/auth", routes.authRoute);
     app.use("/users", routes.userRoutes);
     app.use("/products", routes.productsRoute);
+    app.use("/table", routes.tableRoute);
     app.use("/checkout", stripeRoute);
     app.use("/orders", routes.ordersRoute);
     app.use("/admin-auth", routes.adminauthRouter);

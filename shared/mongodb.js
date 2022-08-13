@@ -8,6 +8,7 @@ const mongo = {
   users: null,
   orders: null,
   admin: null,
+  table: null,
 
   // connect mongodb methods
   async connect() {
@@ -27,6 +28,7 @@ const mongo = {
     this.products = this.db.collection("products");
     this.users = this.db.collection("users");
     this.admin = this.db.collection("admin");
+    this.table = this.db.collection("table");
     console.log(
       `${process.env.MONGO_DB_NAME} collection initillized successfully`
     );
