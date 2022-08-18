@@ -3,8 +3,25 @@ const joi = require("joi");
 const ObjectId = require("mongodb").ObjectId;
 const db = require("../shared/mongodb");
 
+// UserProfileSchema
+const userProfileSchema = joi.object({
+  fullname: joi.string().required(),
+  contactnumber: joi.number().required(),
+  password: joi.string().min(3).max(20).required(),
+  cPassword: joi.ref("password"),
+  address: joi.string().required(),
+  img: joi.string().required(),
+});
+
 // mongodb query
 const helper = {
+  validateProfileSchema(user) {
+    try {
+      return userProfileSchema.validateAsync(user);
+    } catch ({ details: [{ message }] }) {
+      throw new Error(message);
+    }
+  },
   find() {
     return db.users.find();
   },

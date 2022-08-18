@@ -1,6 +1,7 @@
 // import files
 const helper = require("../helper/user.helper");
 const authhelper = require("../helper/auth.helper");
+const bcrypt = require("bcrypt");
 
 // user service
 const service = {
@@ -30,10 +31,16 @@ const service = {
   async updateUsers(req, res) {
     try {
       // data validation
-      const newPost = await authhelper.validateSignUpSchema(req.body);
+      const newPost = await helper.validateProfileSchema(req.body);
+      delete newPost.cPassword;
       // post validation
       const oldPost = await authhelper.findById(req.params.id);
       if (!oldPost) return res.status(400).send({ error: "id invalid" });
+      // Generate Password
+      newPost.password = await bcrypt.hash(
+        newPost.password.toString(),
+        await bcrypt.genSalt(10)
+      );
       // update data
       const { value } = await helper.update({ _id: oldPost._id, ...newPost });
       res.send(value);
