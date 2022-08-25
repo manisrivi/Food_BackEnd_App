@@ -5,6 +5,14 @@ const joi = require("joi");
 
 // ordersSchema
 const ordersSchema = joi.object({
+  token: joi.object().required(),
+  product: joi.array().required(),
+  total: joi.number().required(),
+  status: joi.string().required(),
+});
+
+// ordersUpdateSchema
+const ordersUpdateSchema = joi.object({
   userId: joi.string().required(),
   token: joi.object().required(),
   product: joi.array().required(),
@@ -17,6 +25,13 @@ const helper = {
   validate(post) {
     try {
       return ordersSchema.validateAsync(post);
+    } catch ({ details: [{ message }] }) {
+      throw new Error(message);
+    }
+  },
+  validateOrdersUpdateSchema(post) {
+    try {
+      return ordersUpdateSchema.validateAsync(post);
     } catch ({ details: [{ message }] }) {
       throw new Error(message);
     }

@@ -58,14 +58,15 @@ const service = {
 
   // delete product by Id
   async deleteTableById(req, res) {
+    console.log(req.user);
     try {
       // check productId
       const productId = await helper.findById(req.params.id);
       if (!productId)
         return res.status(400).send({ error: "product id invalid" });
       // delete data
-      await helper.deleteById(productId._id);
-      res.end();
+      const data = await helper.deleteById(productId._id);
+      res.send(data);
     } catch (error) {
       res.status(500).send({ error: error.message });
     }

@@ -10,7 +10,6 @@ const middleware = {
       if (req.headers && req.headers.authorization) {
         const [_, token] = req.headers.authorization.split(" ");
         req.user = await jwt.verify(token, process.env.JWT_SECRET);
-        console.log(req.user);
         next();
       } else {
         res.status(403).send({ error: "No authorization headers" });

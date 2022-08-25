@@ -7,8 +7,6 @@ const db = require("../shared/mongodb");
 const userProfileSchema = joi.object({
   fullname: joi.string().required(),
   contactnumber: joi.number().required(),
-  password: joi.string().min(3).max(20).required(),
-  cPassword: joi.ref("password"),
   address: joi.string().required(),
   img: joi.string().required(),
 });

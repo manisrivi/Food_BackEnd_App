@@ -29,13 +29,15 @@ const app = express();
     // routes
     app.get("/", (req, res) => res.send("hello world"));
     app.use("/auth", routes.authRoute);
-    app.use("/users", routes.userRoutes);
-    app.use("/products", routes.productsRoute);
-    app.use("/table", routes.tableRoute);
-    app.use("/checkout", stripeRoute);
-    app.use("/orders", routes.ordersRoute);
     app.use("/admin-auth", routes.adminauthRouter);
+    app.use("/table", routes.tableRoute);
+    app.use("/products", routes.productsRoute);
     app.use(middleware.auth);
+    app.use("/users", routes.userRoutes);
+    app.use("/orders", routes.ordersRoute);
+    app.use("/checkout", stripeRoute);
+   
+    
     console.log("routes initillized successfully");
 
     // port listen

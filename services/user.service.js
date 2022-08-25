@@ -19,7 +19,7 @@ const service = {
   // user by Id
   async getUsersById(req, res) {
     try {
-      const data = await helper.findById(req.params.id);
+      const data = await helper.findById(req.user._id);
       res.send(data);
     } catch (error) {
       console.log("error-", error.message);
@@ -32,15 +32,9 @@ const service = {
     try {
       // data validation
       const newPost = await helper.validateProfileSchema(req.body);
-      delete newPost.cPassword;
       // post validation
-      const oldPost = await authhelper.findById(req.params.id);
+      const oldPost = await authhelper.findById(req.user._id);
       if (!oldPost) return res.status(400).send({ error: "id invalid" });
-      // Generate Password
-      newPost.password = await bcrypt.hash(
-        newPost.password.toString(),
-        await bcrypt.genSalt(10)
-      );
       // update data
       const { value } = await helper.update({ _id: oldPost._id, ...newPost });
       res.send(value);

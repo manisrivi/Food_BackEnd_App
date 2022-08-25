@@ -18,11 +18,11 @@ const service = {
   // All orders user by Id
   async getAllOrdersUserById(req, res) {
     try {
-      const data = await helper.findByUserId(req.params.userId);
+      const data = await helper.findByUserId(req.user._id);
       res.send(data);
     } catch (error) {
       console.log("error", error.message);
-      res.status(500).send({ error: `cannot fetch this id ${req.params.id}` });
+      res.status(500).send({ error: `cannot fetch this id ${req.user._id}` });
     }
   },
 
@@ -42,12 +42,10 @@ const service = {
     try {
       // data validation
       const post = await helper.validate(req.body);
-      // user validation
-      const user = await authhelper.findById(post.userId);
-      if (!user) return res.status(400).send({ error: "user Invalid" });
       // Insert orders
       const { insertedId: _id } = await helper.create({
         ...post,
+        userId: req.user._id,
         date: new Date().toLocaleDateString(),
         time: new Date().toLocaleTimeString(),
       });
@@ -62,7 +60,7 @@ const service = {
   async updateOrders(req, res) {
     try {
       // data validation
-      const newPost = await helper.validate(req.body);
+      const newPost = await helper.validateOrdersUpdateSchema(req.body);
       // post validation
       const oldPost = await helper.findById(req.params.id);
       if (!oldPost) return res.status(400).send({ error: "order id invalid" });
