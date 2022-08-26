@@ -2,6 +2,7 @@
 const helper = require("../helper/user.helper");
 const authhelper = require("../helper/auth.helper");
 const bcrypt = require("bcrypt");
+const cloudinary = require("../helper/cloudinary.helper");
 
 // user service
 const service = {
@@ -32,6 +33,11 @@ const service = {
     try {
       // data validation
       const newPost = await helper.validateProfileSchema(req.body);
+      if (newPost.img){
+        newPost.img = await cloudinary.uploader.upload(newPost.img, {
+        upload_preset: "noodlecountry"
+      })
+    }
       // post validation
       const oldPost = await authhelper.findById(req.user._id);
       if (!oldPost) return res.status(400).send({ error: "id invalid" });

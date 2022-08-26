@@ -11,6 +11,7 @@ const productSchema = joi.object({
   price: joi.number().required(),
   rating: joi.number().required(),
   offer: joi.number().required(),
+  category: joi.string().required(),
 });
 
 // validationSchema & mongodb query

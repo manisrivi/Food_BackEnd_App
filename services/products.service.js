@@ -1,5 +1,6 @@
 // import files
 const helper = require("../helper/products.helper");
+const cloudinary = require("../helper/cloudinary.helper");
 
 // prodcut service
 const service = {
@@ -30,6 +31,11 @@ const service = {
     try {
       // data validation
       const data = await helper.validate(req.body);
+      if (data.img){
+        data.img = await cloudinary.uploader.upload(data.img, {
+        upload_preset: "noodlecountry"
+      })
+    }
       // insert data
       const insertData = await helper.create(data);
       res.send(insertData);
@@ -44,6 +50,11 @@ const service = {
     try {
       // data validation
       const newPost = await helper.validate(req.body);
+      if (newPost.img){
+        newPost.img = await cloudinary.uploader.upload(newPost.img, {
+        upload_preset: "noodlecountry"
+      })
+    }
       // post validation
       const oldPost = await helper.findById(req.params.id);
       if (!oldPost) return res.status(400).send({ error: "id invalid" });
