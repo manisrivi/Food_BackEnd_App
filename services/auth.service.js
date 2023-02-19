@@ -48,7 +48,7 @@ const service = {
         process.env.JWT_SECRET,
         { expiresIn: "8h" }
       );
-      res.send({ message: "user login successfully", authToken });
+      res.send({ message: "user login successfully", authToken, email: dbUser.email });
     } catch (error) {
       res.status(500).send({ error: error.message });
     }
